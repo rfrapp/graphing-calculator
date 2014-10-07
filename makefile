@@ -1,0 +1,2 @@
+exe:
+	python main.py
