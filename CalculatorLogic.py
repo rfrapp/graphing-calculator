@@ -11,7 +11,7 @@ RED        = "#FF0000"
 
 random.seed()
 
-class CalculatorLogic():
+class CalculatorLogic(object):
     colors = [BLACK, LIGHTGREEN, BLUE, DARKGREEN, RED]
 
     def __init(self):
@@ -35,7 +35,7 @@ class CalculatorLogic():
       for i in equations:
         graph = ET.SubElement(root, "graph")
         graph.set("color", str(random.randrange(0, 255)) + ',' + str(random.randrange(0, 255)) + ',' + str(random.randrange(0, 175)))
-        graph.text = i 
+        graph.text = i
 
       tree = ET.ElementTree(root)
       tree.write("files/graphs.xml")
@@ -45,15 +45,15 @@ class CalculatorLogic():
 
       # read files/graphs.xml
       tree = ET.parse('files/graphs.xml')
-      root = tree.getroot() 
+      root = tree.getroot()
 
       for child in root.findall("graph"):
         graphs.append([child.text, child.get('color')])
 
       for i in range(len(graphs)):
         graphs[i][0] = graphs[i][0][graphs[i][0].find('=') + 1:]
-      
-      print "graphs: ", graphs 
+
+      print "graphs: ", graphs
 
       return graphs
 
@@ -71,23 +71,23 @@ class CalculatorLogic():
       window.append(float(root.find("xscale").text))
       window.append(float(root.find("yscale").text))
 
-      # print "window: ", window 
+      # print "window: ", window
 
-      return window 
+      return window
 
 
     def calculatePoint(self, text, x):
       text = text.replace("x", "(" + str(x) + ")")
-      # print "Text:", text 
-      print "expression:", text 
+      # print "Text:", text
+      print "expression:", text
       y    = self.calculate(text)
       if not "Error" in y:
         y    = solveShuntingExpression(y)
-        
+
       if not "Error" in y:
-         return [x, float(y)] 
+         return [x, float(y)]
       else:
-        return "Error" 
+        return "Error"
 
     def infix_to_rp(self, text):
         try:
@@ -96,7 +96,7 @@ class CalculatorLogic():
             if "Error" in expression:
                 return "Error"
 
-            return expression 
+            return expression
 
         except ValueError:
             return "Error"
@@ -113,5 +113,5 @@ class CalculatorLogic():
                 solution = solution[:-2]
         except ValueError:
             solution = "Error"
-            
+
         return solution

@@ -2,7 +2,7 @@
 import CalculatorLogic
 from CalculatorLogic import *
 
-class Equation():
+class Equation(object):
 
     def __init__(self, text, color):
         self.color       = color
@@ -11,7 +11,7 @@ class Equation():
         # holding lists of x,y positions computed by substituting
         # values in the graph menu's window into the equation
         # and evaluating
-        # 
+        #
         # example:
         # lines    = [
         #               [[1,-1], [0,0], [1,1]] # line 1
@@ -42,7 +42,7 @@ class Equation():
             pixel_line = []
 
             for point in line:
-                p = [point[0], point[1]] 
+                p = [point[0], point[1]]
                 p[0] = float(point[0])
                 p[1] = float(point[1])
                 p[0] = w / 2 + dx * p[0]
@@ -63,17 +63,20 @@ class Equation():
     def calculate(self, x):
         result = self.logic.calculatePoint(self.value, x)[1]
 
-        if "Error" in str(result):
+        try:
+            if "Error" in str(result):
+                return "Error"
+            else:
+                return result
+        except:
             return "Error"
-        else:
-            return result
 
     def calculate_points(self, xmin, xmax, inc = 0.5):
         line = []
-        i = xmin 
+        i = xmin
 
         while i <= xmax:
-            print self.value, i 
+            print self.value, i
             point = self.logic.calculatePoint(self.value, i)
 
             if "Error" in point:
@@ -92,5 +95,4 @@ class Equation():
             if i + inc > xmax:
                 self.lines.append(line)
 
-            i += inc 
-
+            i += inc
