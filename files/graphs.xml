@@ -1,1 +1,1 @@
-<Graphs><graph color="6,172,148">Y1=1/x</graph><graph color="143,190,109">Y2=-1/x</graph><graph color="210,163,145">Y3=2x</graph><graph color="9,139,144">Y4=-2x</graph><graph color="76,220,126">Y5=sin(x)</graph></Graphs>
+<Graphs><graph color="184,156,2">Y1=1/x</graph><graph color="53,95,81">Y2=-1/x</graph><graph color="105,200,25">Y3=x</graph><graph color="217,233,88">Y4=-x</graph><graph color="59,143,148">Y5=-sin(x)</graph></Graphs>

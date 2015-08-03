@@ -1,3 +1,4 @@
+from decimal import Decimal
 import math
 
 functions = ["sin", "cos", "tan", "sqrt", "abs", "factorial", "pi"]
@@ -161,12 +162,12 @@ def shuntingYard(expression):
             # 1. - is the first character in the string
             # 2. ( precedes a -
             # 3. - follows another operator
-            if expression[count] == '-' and (count - 1 < 0 or isOp(expression[count - 1]) or expression[count - 1] == '('):
+            if expression[count] == '-' and (count - 1 < 0 or isOp(expression[count - 1]) or expression[count - 1] == '(' or precedesFunc(expression, count)):
                 if count + 1 < len(expression):
 
                     # If the unary minus is used before an open
                     # parenthesis, then append -1* before it
-                    if expression[count + 1] == '(':
+                    if expression[count + 1] == '(' or precedesFunc(expression, count):
                         expression = expression[:count] + "-1*" + expression[count + 1:]
 
                 unaryMinus = True
@@ -247,11 +248,12 @@ def shuntingYard(expression):
         count2 -= 1
 
 
+    print "outputStr:", outputStr
     return outputStr
 
 def solveShuntingExpression(expression):
     # print "expression:", expression
-    answer = 0.0
+    answer = Decimal(0.0)
     operands = expression.split(" ")
     count = 0
     numStack = []
@@ -261,7 +263,6 @@ def solveShuntingExpression(expression):
         return operands[0]
 
     count = 0
-    print operands
 
     while count < len(operands):
         result = 0.0
@@ -279,12 +280,9 @@ def solveShuntingExpression(expression):
             if not is_func:
                 numStack.append(float(operands[count]))
         else:
-            print numStack
-            print "count:", count, operands 
-            result = performOp(operands[count], numStack[len(numStack) - 2], numStack[len(numStack) - 1])
+            result = performOp(operands[count], Decimal(numStack[-2]), Decimal(numStack[-1]))
             numStack = numStack[:-2]
             numStack.append(result)
-            # print numStack
 
             answer = result
 
@@ -331,6 +329,17 @@ def isNum(char):
 
 def isOp(char):
     return char in "+-*/^"
+
+# Returns true if the character at position |i| 
+# in the string |expression| precedes the name of a
+# function.
+def precedesFunc(expression, i):
+    for func in functions:
+        l = len(func)
+
+        if expression[i + 1:i + 1 + l] == func:
+            return True
+    return False
 
 def getPrecedence(op):
     if op == '^':
