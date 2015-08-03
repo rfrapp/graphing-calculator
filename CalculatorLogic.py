@@ -53,8 +53,6 @@ class CalculatorLogic(object):
       for i in range(len(graphs)):
         graphs[i][0] = graphs[i][0][graphs[i][0].find('=') + 1:]
 
-      print "graphs: ", graphs
-
       return graphs
 
     def getWindow(self):
@@ -78,8 +76,6 @@ class CalculatorLogic(object):
 
     def calculatePoint(self, text, x):
       text = text.replace("x", "(" + str(x) + ")")
-      # print "Text:", text
-      print "expression:", text
       y    = self.calculate(text)
       if not "Error" in y:
         y    = solveShuntingExpression(y)
@@ -102,11 +98,9 @@ class CalculatorLogic(object):
             return "Error"
 
     def calculate(self, text):
-        # print "text:", text
 
         try:
             expression = shuntingYard(text)
-            # print "expression:", expression
             solution = solveShuntingExpression(expression)
 
             if solution[len(solution) - 2:len(str(solution))] == ".0":

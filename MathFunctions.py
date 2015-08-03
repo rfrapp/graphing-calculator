@@ -247,12 +247,9 @@ def shuntingYard(expression):
         outputStr += " " + operatorStack[count2]
         count2 -= 1
 
-
-    print "outputStr:", outputStr
     return outputStr
 
 def solveShuntingExpression(expression):
-    # print "expression:", expression
     answer = Decimal(0.0)
     operands = expression.split(" ")
     count = 0

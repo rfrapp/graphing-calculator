@@ -76,7 +76,6 @@ class Equation(object):
         i = xmin
 
         while i <= xmax:
-            print self.value, i
             point = self.logic.calculatePoint(self.value, i)
 
             if "Error" in point:
