@@ -42,9 +42,7 @@ class Equation(object):
             pixel_line = []
 
             for point in line:
-                p = [point[0], point[1]]
-                p[0] = float(point[0])
-                p[1] = float(point[1])
+                p = [float(point[0]), float(point[1])]
                 p[0] = w / 2 + dx * p[0]
                 p[1] = h / 2 - dy * p[1]
 

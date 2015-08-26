@@ -177,16 +177,19 @@ def shuntingYard(expression):
                 # get the precedence of the current operator
                 opPrec = getPrecedence(expression[count])
 
-                if len(operatorStack) >= 1:
-                    if opPrec == getPrecedence(operatorStack[-1]):
-                        if expression[count] != '^':
-                            outputStr += operatorStack[-1] + " "
 
-                            # Pop back
+                if len(operatorStack) >= 1:
+                    popped = True
+                    while popped:
+                        if len(operatorStack) == 0: 
+                            break 
+
+                        if opPrec <= getPrecedence(operatorStack[-1]):
+                            outputStr += operatorStack[-1] + " "
                             operatorStack = operatorStack[:-1]
-                    elif opPrec < getPrecedence(operatorStack[-1]):
-                        outputStr += operatorStack[-1] + " "
-                        operatorStack = operatorStack[:-1]
+                            popped = True 
+                        else:
+                            popped = False
 
                 # push the found operator onto the stack
                 operatorStack.append(expression[count])
@@ -250,7 +253,7 @@ def shuntingYard(expression):
     return outputStr
 
 def solveShuntingExpression(expression):
-    answer = Decimal(0.0)
+    answer = 0.0
     operands = expression.split(" ")
     count = 0
     numStack = []
@@ -277,7 +280,7 @@ def solveShuntingExpression(expression):
             if not is_func:
                 numStack.append(float(operands[count]))
         else:
-            result = performOp(operands[count], Decimal(numStack[-2]), Decimal(numStack[-1]))
+            result = performOp(operands[count], numStack[-2], numStack[-1])
             numStack = numStack[:-2]
             numStack.append(result)
 
