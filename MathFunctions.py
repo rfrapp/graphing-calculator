@@ -240,6 +240,10 @@ def shuntingYard(expression):
             # move one character further in the string
             count += 1
 
+            if count < len(expression) and expression[count] == '(':
+                expression = expression[:count] + "*" + expression[count:]
+                print "new expr:", expression
+
     # a counter for the index of the last
     # operator in the operator stack
     count2 = len(operatorStack) - 1
